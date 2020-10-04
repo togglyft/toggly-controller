@@ -1,37 +1,34 @@
 const Feature = require('../entities/feature.entity')
-
-let features = [
-  new Feature(1, 'Feature 1', false),
-  new Feature(2, 'Feature 2', true),
-  new Feature(3, 'Feature 3', true),
-  new Feature(4, 'Feature 4', false),
-]
+const repository = require('../repositories/feature.repository')
 
 exports.findAll = (req, res) => {
-  console.log(features)
-  res.send(features)
+  repository.findAll().then(r => {
+    console.log(r)
+    res.status(200).send(r)
+  })
+};
+
+exports.findOne = (req, res) => {
+  repository.search(new Feature(req.params.id, null, null))
+  .then(r => {
+    r ? res.status(200).send(r)
+      : res.status(400).send("Feature not found")
+  })
+  .catch(e => res.status(500).send(e))
 };
 
 exports.create = (req, res) => {
-  console.log("create");
-  console.log(req.body)
   if (!req.body || !req.body.name) {
     return res.status(400).send({
       message: "Please fill all required fields"
     });
   }
-  const feature = new Feature(features.length+1, req.body.name, req.body.enabled);
-
-  features.push(feature);
-  res.status(200).send(feature)
-};
-
-exports.findOne = (req, res) => {
-  console.log("findOne");
-  const feature = features.find(f => f.id == req.params.id);
-  feature
-    ? res.status(200).send(feature)
-    : res.status(400).send("Feature not found");
+  repository.create(new Feature(null, req.body.name, req.body.enabled))
+  .then(r => {
+    console.log("created")
+    res.sendStatus(200)
+  })
+  .catch(e => res.status(500).send(e))
 };
 
 exports.update = (req, res) => {
@@ -43,22 +40,13 @@ exports.update = (req, res) => {
     });
   }
 
-  const feature = features.find(f => f.id == req.params.id);
-  if(!feature) {
-    res.status(400).send("Feature not found");
-  } else {
-    feature.name = req.body.name;
-    feature.enabled = req.body.enabled;
-    res.status(200).send(feature);
-  } 
+  repository.update(new Feature(req.params.id, req.body.name, req.body.enabled))
+  .then(r => res.sendStatus(200))
+  .catch(e => res.status(500).send(e))
 };
 
 exports.delete = (req, res) => {
-  console.log("delete");
-  const feature = features.find(f => f.id == req.params.id);
-  features = features.filter(f => f.id != req.params.id)
-  console.log(features)
-  feature
-    ?  res.sendStatus(200)
-    : res.status(400).send("Feature not found");
+  repository.delete(new Feature(req.params.id, null, null))
+  .then(r => res.sendStatus(200))
+  .catch(e => res.status(500).send(e))
 };

@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const featureRoutes = require('./src/routes/feature.routes')
+const configmgr = require('./src/configmgr');
 
+configmgr.init();
 
 const app = express();
 const port = process.env.PORT || 4000;

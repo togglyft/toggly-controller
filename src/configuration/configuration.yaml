@@ -1,0 +1,8 @@
+storageStrategy: mysql
+
+mysql:
+  connections: 10
+  host: localhost
+  user: toggly
+  password: toggly
+  database: toggly
