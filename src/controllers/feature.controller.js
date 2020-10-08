@@ -18,7 +18,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  if (!req.body || !req.body.name) {
+  if (!req.body || !req.body.name || req.body.name.length==0) {
     return res.status(400).send({
       message: "Please fill all required fields"
     });
@@ -34,7 +34,7 @@ exports.create = (req, res) => {
 exports.update = (req, res) => {
   console.log("update");
   // Validate Request
-  if (!req.body) {
+  if (!req.body || !req.body.name) {
     return res.status(400).send({
       message: "Please fill all required fields"
     });
