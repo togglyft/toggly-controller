@@ -17,7 +17,7 @@ app.use(function(req, res, next) {
 });
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use('/api/features', featureRoutes)
+app.use('/api', featureRoutes)
 
 app.listen(port, () => {
   console.log(`Node server is listening on port ${port}`);
