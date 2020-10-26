@@ -3,7 +3,6 @@ const repository = require('../repositories/feature.repository')
 
 exports.findAll = (req, res) => {
   repository.findAll().then(r => {
-    console.log(r)
     res.status(200).send(r)
   })
 };
@@ -25,14 +24,12 @@ exports.create = (req, res) => {
   }
   repository.create(new Feature(null, req.body.name, req.body.enabled))
   .then(r => {
-    console.log("created")
     res.sendStatus(200)
   })
   .catch(e => res.status(500).send(e))
 };
 
 exports.update = (req, res) => {
-  console.log("update");
   // Validate Request
   if (!req.body || !req.body.name) {
     return res.status(400).send({
