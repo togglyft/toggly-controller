@@ -48,7 +48,6 @@ exports.create = (feature) => {
       if (error)
         rej(error)
       else {
-        console.log(results)
         res({});
       }
     })
@@ -61,7 +60,6 @@ exports.delete = (feature) => {
       if (error)
         rej(error)
       else {
-        console.log(results)
         res({});
       }
     })
@@ -74,7 +72,6 @@ exports.update = (feature) => {
       if (error)
         rej(error)
       else {
-        console.log(results)
         res({});
       }
     })

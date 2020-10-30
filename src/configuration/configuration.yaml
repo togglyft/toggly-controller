@@ -1,4 +1,4 @@
-storageStrategy: mysql
+storageStrategy: inMemory
 
 mysql:
   connections: 10

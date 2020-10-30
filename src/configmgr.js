@@ -7,9 +7,10 @@ exports.init = () => {
   try {
     let config = yaml.safeLoad(fs.readFileSync(CONFIG_FILE, 'utf8'))
 
+    console.log(`StorageStrategy => ${config.storageStrategy}`)
+
     initDatabase(config)
     
-    console.log(config);
   } catch (e) {
     console.log(e);
   }
@@ -21,11 +22,13 @@ let initDatabase = (config) => {
       const mysql = require('./repositories/mysql.feature.repository')
       mysql.init(config.mysql)
       repository.init(mysql)
-      console.log(repository)
       break;
     case "postgresql":
       break;
-    case "in-memory":
+    case "inMemory":
+      const volatile = require('./repositories/volatile.feature.repository')
+      volatile.init(config.inMemory)
+      repository.init(volatile)
       break;
     case "etcd":
       break;
