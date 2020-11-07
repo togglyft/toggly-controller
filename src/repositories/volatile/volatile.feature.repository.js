@@ -1,10 +1,6 @@
-const Feature = require('../entities/feature.entity');
+const Feature = require('../../entities/feature.entity');
+const errors = require('../../helpers/errors')
 let repository;
-
-const NO_ATTTRIBUTE_SPECIFIED = "You need to specify an attribute to filter by"
-const FEATURE_ALREADY_EXISTS = "Feature with same name already exists"
-const FEATURE_INCOMPLETE = "Please provide a complete feature"
-const PROVIDE_FEATURE_ID = "Please provide a valid feature id"
 
 exports.init = (configParams) => {
   repository = []
@@ -24,7 +20,7 @@ exports.search = (feature) => {
           .filter(r => feature && feature.id ? r.id == feature.id : true)
           .filter(r => feature && feature.name ? r.name === feature.name : true)
       )
-      : rej(NO_ATTTRIBUTE_SPECIFIED)
+      : rej(errors.NO_ATTTRIBUTE_SPECIFIED)
   })
 }
 
@@ -36,10 +32,10 @@ exports.create = (feature) => {
         repository.push(feature)
         res(feature);
       } else {
-        rej(FEATURE_ALREADY_EXISTS)
+        rej(errors.FEATURE_ALREADY_EXISTS)
       }
     } else {
-      rej(FEATURE_INCOMPLETE)
+      rej(errors.FEATURE_INCOMPLETE)
     }
   })
 }
@@ -50,27 +46,27 @@ exports.delete = (feature) => {
       repository = repository.filter(f => f.id != feature.id)
       res({})
     } else {
-      rej(PROVIDE_FEATURE_ID)
+      rej(errors.PROVIDE_FEATURE_ID)
     }
   })
 }
 
 exports.update = (feature) => {
   return new Promise((res, rej) => {
-    if (feature && feature.id && feature.name) {
-      if(repository.filter(f => f.name === feature.name && f.id != feature.id).length>0){
-        rej(FEATURE_ALREADY_EXISTS)
-      } else {
-        repository
-          .filter(f => f.id == feature.id)
-          .forEach(f => {
-            f.name = feature.name;
-            f.enabled = feature.enabled
-          })
-        res(feature)
-      }
+    if (!feature || !feature.id) {
+      rej(errors.PROVIDE_EXISTING_FEATURE_ID)
+    } else if (!feature.name) {
+      rej(errors.FEATURE_INCOMPLETE)
+    } else if (repository.filter(f => f.name === feature.name && f.id != feature.id).length > 0) {
+      rej(errors.FEATURE_ALREADY_EXISTS)
     } else {
-      rej(PROVIDE_FEATURE_ID)
+      repository
+        .filter(f => f.id == feature.id)
+        .forEach(f => {
+          f.name = feature.name;
+          f.enabled = feature.enabled
+        })
+      res(feature)
     }
   })
 }

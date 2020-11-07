@@ -1,4 +1,4 @@
-const Feature = require('../entities/feature.entity')
+const Feature = require('../../entities/feature.entity')
 var mysql = require('mysql');
 var pool
 const FEATURE_TABLE_NAME = "feature"
@@ -18,10 +18,11 @@ exports.init = (configParams) => {
 exports.findAll = () => {
   return new Promise((res, rej) => {
     pool.query(`SELECT * FROM ${FEATURE_TABLE_NAME}`, function (error, results, fields) {
-      if (error)
+      if (error){
         rej(error);
-      else
+      } else {
         res(results.map(r => toFeatureEntity(r)));
+      }
     });
   })
 }
@@ -32,7 +33,7 @@ exports.search = (feature) => {
         SELECT * FROM ${FEATURE_TABLE_NAME}
         WHERE 1=1
           ${feature && feature.id ? "AND id=" + feature.id : ""}
-          ${feature && feature.name ? "AND name=" + feature.name : ""}
+          ${feature && feature.name ? "AND name='" + feature.name + "'" : ""}
       `, function (error, results, fields) {
       if (error)
         rej(error)

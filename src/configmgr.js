@@ -19,14 +19,14 @@ exports.init = () => {
 let initDatabase = (config) => {
   switch(config.storageStrategy) {
     case "mysql":
-      const mysql = require('./repositories/mysql.feature.repository')
+      const mysql = require('./repositories/mysql/mysql.feature.repository')
       mysql.init(config.mysql)
       repository.init(mysql)
       break;
     case "postgresql":
       break;
     case "inMemory":
-      const volatile = require('./repositories/volatile.feature.repository')
+      const volatile = require('./repositories/volatile/volatile.feature.repository')
       volatile.init(config.inMemory)
       repository.init(volatile)
       break;

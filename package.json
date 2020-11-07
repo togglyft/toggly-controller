@@ -1,10 +1,10 @@
 {
   "name": "toggly-controller",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Controller service for Kubetoggle",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node server.js",
     "dev": "./node_modules/nodemon/bin/nodemon.js server.js",
     "dockerBuild": "./dockerBuild.sh",
@@ -16,7 +16,10 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "js-yaml": "^3.14.0",
-    "mysql": "^2.18.1",
-    "nodemon": "^2.0.4"
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.2",
+    "supertest": "^6.0.1"
   }
 }

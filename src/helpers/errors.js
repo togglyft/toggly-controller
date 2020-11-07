@@ -1,0 +1,5 @@
+exports.NO_ATTTRIBUTE_SPECIFIED = "You need to specify an attribute to filter by"
+exports.FEATURE_ALREADY_EXISTS = "Feature with same name already exists"
+exports.FEATURE_INCOMPLETE = "Please provide a complete feature"
+exports.PROVIDE_EXISTING_FEATURE_ID = "Please provide a valid feature id"
+exports.FEATURE_NOT_FOUND = "Feature not found"
