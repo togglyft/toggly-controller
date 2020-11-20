@@ -12,6 +12,6 @@
 | Remove a feature   | DELETE | /api/features/:id             |
 
 
-[docker-img]: https://img.shields.io/docker/v/pabloubal/toggly-controller?label=docker-hub&style=plastic
-[docker-img-size]: https://img.shields.io/docker/image-size/pabloubal/toggly-controller?label=docker-image-size&style=plastic
-[docker-hub]: https://hub.docker.com/r/pabloubal/toggly-controller
+[docker-img]: https://img.shields.io/docker/v/togglyft/toggly-controller?label=docker-hub&style=plastic
+[docker-img-size]: https://img.shields.io/docker/image-size/togglyft/toggly-controller?label=docker-image-size&style=plastic
+[docker-hub]: https://hub.docker.com/r/togglyft/toggly-controller
