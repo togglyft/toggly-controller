@@ -6,3 +6,4 @@ mysql:
   user: toggly
   password: toggly
   database: toggly
+  table: feature

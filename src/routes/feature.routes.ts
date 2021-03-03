@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const featuresController = require('../controllers/feature.controller');
+const featuresController = require('../controllers/feature.controller.ts');
 // Retrieve all users
 router.get('/features', featuresController.findAll);
 // Create a new user

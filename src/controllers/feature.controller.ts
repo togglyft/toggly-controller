@@ -1,7 +1,7 @@
-const Feature = require('../entities/feature.entity')
-const repository = require('../repositories/feature.repository')
-const errors = require('../helpers/errors')
-const responseSorter = require('../helpers/sorter')
+const Feature = require('../entities/feature.entity.ts')
+const repository = require('../repositories/feature.repository.ts')
+const errors = require('../helpers/errors.ts')
+const responseSorter = require('../helpers/sorter.ts')
 
 exports.findAll = (req, res) => {
   return new Promise(resolve => {
