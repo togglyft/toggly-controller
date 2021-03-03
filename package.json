@@ -2,11 +2,11 @@
   "name": "toggly-controller",
   "version": "0.1.0",
   "description": "Controller service for Kubetoggle",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "test": "jest",
-    "start": "node server.js",
-    "dev": "./node_modules/nodemon/bin/nodemon.js server.js",
+    "start": "node server.ts",
+    "dev": "./node_modules/nodemon/bin/nodemon.js server.ts",
     "dockerBuild": "./dockerBuild.sh",
     "dockerPush": "./dockerPush.sh"
   },

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const yaml = require('js-yaml')
 const CONFIG_FILE = "./src/configuration/configuration.yaml"
-const repository = require('./repositories/feature.repository')
+const repository = require('./repositories/feature.repository.ts')
 
 exports.init = () => {
   try {
@@ -19,14 +19,14 @@ exports.init = () => {
 let initDatabase = (config) => {
   switch(config.storageStrategy) {
     case "mysql":
-      const mysql = require('./repositories/mysql/mysql.feature.repository')
+      const mysql = require('./repositories/mysql/mysql.feature.repository.ts')
       mysql.init(config.mysql)
       repository.init(mysql)
       break;
     case "postgresql":
       break;
     case "inMemory":
-      const volatile = require('./repositories/volatile/volatile.feature.repository')
+      const volatile = require('./repositories/volatile/volatile.feature.repository.ts')
       volatile.init(config.inMemory)
       repository.init(volatile)
       break;

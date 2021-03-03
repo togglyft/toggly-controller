@@ -1,5 +1,5 @@
-const Feature = require('../../entities/feature.entity');
-const errors = require('../../helpers/errors')
+const Feature = require('../../entities/feature.entity.ts');
+const errors = require('../../helpers/errors.ts')
 let repository;
 
 exports.init = (configParams) => {
