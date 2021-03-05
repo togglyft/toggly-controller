@@ -10,7 +10,7 @@ COPY src src
 COPY server.ts .
 COPY src/configuration/configuration.yaml /etc/toggly/controller/conf/configuration.yaml
 RUN rm src/configuration/configuration.yaml
-RUN ln -fs /etc/toggly/ui/conf/config.json src/configuration/configuration.yaml
+RUN ln -fs /etc/toggly/controller/conf/configuration.yaml src/configuration/configuration.yaml
 
 EXPOSE 4000
 CMD [ "node", "server.ts" ]
