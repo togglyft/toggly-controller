@@ -6,28 +6,33 @@ const repository = require('./repositories/feature.repository.ts')
 exports.init = () => {
   try {
     let config = yaml.safeLoad(fs.readFileSync(CONFIG_FILE, 'utf8'))
+    const configWrapper = require('./configWrapper.ts')
+    configWrapper.init(config)
+    console.log(`StorageStrategy => ${configWrapper.get("storageStrategy")}`)
 
-    console.log(`StorageStrategy => ${config.storageStrategy}`)
-
-    initDatabase(config)
+    initDatabase(configWrapper)
     
   } catch (e) {
     console.log(e);
   }
 }
 
-let initDatabase = (config) => {
-  switch(config.storageStrategy) {
+let initDatabase = (configWrapper) => {
+  switch(configWrapper.get("storageStrategy")) {
     case "mysql":
       const mysql = require('./repositories/mysql/mysql.feature.repository.ts')
-      mysql.init(config.mysql)
+      const configWrapperMysql = require('./configWrapper.ts')
+      configWrapperMysql.init(configWrapper.get("mysql"))
+      mysql.init(configWrapperMysql)
       repository.init(mysql)
       break;
     case "postgresql":
       break;
     case "inMemory":
       const volatile = require('./repositories/volatile/volatile.feature.repository.ts')
-      volatile.init(config.inMemory)
+      const configWrapperInMemory = require('./configWrapper.ts')
+      configWrapperInMemory.init(configWrapper.get("inMemory"))
+      volatile.init(configWrapperInMemory)
       repository.init(volatile)
       break;
     case "etcd":
