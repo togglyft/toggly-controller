@@ -1,6 +1,5 @@
 node_modules/
 coverage/
-package-lock.json
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/toggly-controller.iml
