@@ -1,3 +1,4 @@
+# Params could be placeholders in form ${STORAGE_STRATEGY} in which case they will take the value from env variables
 storageStrategy: inMemory
 
 mysql:

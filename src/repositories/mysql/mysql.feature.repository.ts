@@ -3,15 +3,16 @@ var mysql = require('mysql');
 var pool
 var featureTableName = "feature";
 
-exports.init = (configParams) => {
-  featureTableName = configParams.table ? configParams.table : featureTableName;
+exports.init = (configWrapper) => {
+  featureTableName = configWrapper.get('table') ? configWrapper.get('table') : featureTableName;
+  console.log(`tableName => ${configWrapper.get("table")}`)
   pool = mysql.createPool({
-    connectionLimit: configParams.connections ? configParams.connections : 10,
-    host: configParams.host ? configParams.host : "localhost",
-    port: configParams.port ? configParams.port : 3306,
-    user: configParams.user,
-    password: configParams.password,
-    database: configParams.database ? configParams.database : "toggly",
+    connectionLimit: configWrapper.get('connectionLimit') ? configWrapper.get('connectionLimit') : 10,
+    host: configWrapper.get('host') ? configWrapper.get('host') : "localhost",
+    port: configWrapper.get('port') ? configWrapper.get('port') : 3306,
+    user: configWrapper.get('user'),
+    password: configWrapper.get('password'),
+    database: configWrapper.get('database') ? configWrapper.get('database') : "toggly",
     typeCast: function castField( field, useDefaultTypeCasting ) {
       // credit: https://www.bennadel.com/blog/3188-casting-bit-fields-to-booleans-using-the-node-js-mysql-driver.htm
       if ( ( field.type === "BIT" ) && ( field.length === 1 ) ) {
