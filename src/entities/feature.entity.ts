@@ -1,9 +1,9 @@
-function Feature(id, name, enabled, lastModified, relatedTask) {
+function Feature(id, name, enabled, relatedTask, lastModified) {
   this.id = id;
   this.name = name;
   this.enabled = enabled;
-  this.lastModified = lastModified;
   this.relatedTask = relatedTask;
+  this.lastModified = lastModified;  
 }
 
 module.exports = Feature
