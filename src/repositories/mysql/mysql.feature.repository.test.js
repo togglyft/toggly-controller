@@ -8,7 +8,6 @@ var pool = {
 
 beforeAll(() => {
   mysql.createPool = jest.fn().mockImplementation(() => pool)
-  tested.init({})
 });
 
 describe('mysql repository', () => {
@@ -20,7 +19,8 @@ describe('mysql repository', () => {
       port: 1234,
       user: "user",
       password: "password",
-      database: "database"
+      database: "database",
+      table: "feature"
     }
 
     let expectedConfig = {
@@ -32,11 +32,16 @@ describe('mysql repository', () => {
       database: configParams.database
     }
 
+    const configWrapper = require('../../configWrapper.ts')
+    configWrapper.init(configParams)
+
     //when
-    tested.init(configParams)
+    tested.init(configWrapper)
 
     //then
-    expect(mysql.createPool).toHaveBeenCalledWith(expectedConfig)
+    expect(mysql.createPool).toHaveBeenCalledWith(
+      expect.objectContaining(expectedConfig)
+    )
   });
 
   test('should initialize repository with default params', () => {
@@ -54,12 +59,16 @@ describe('mysql repository', () => {
       password: configParams.password,
       database: "toggly"
     }
+    const configWrapper = require('../../configWrapper.ts')
+    configWrapper.init(configParams)
 
     //when
-    tested.init(configParams)
+    tested.init(configWrapper)
 
     //then
-    expect(mysql.createPool).toHaveBeenCalledWith(expectedConfig)
+    expect(mysql.createPool).toHaveBeenCalledWith(
+      expect.objectContaining(expectedConfig)
+    )
   });
 
   test('should return all toggles', () => {

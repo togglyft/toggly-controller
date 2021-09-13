@@ -5,7 +5,6 @@ var featureTableName = "feature";
 
 exports.init = (configWrapper) => {
   featureTableName = configWrapper.get('table') ? configWrapper.get('table') : featureTableName;
-  console.log(`tableName => ${configWrapper.get("table")}`)
   pool = mysql.createPool({
     connectionLimit: configWrapper.get('connectionLimit') ? configWrapper.get('connectionLimit') : 10,
     host: configWrapper.get('host') ? configWrapper.get('host') : "localhost",
