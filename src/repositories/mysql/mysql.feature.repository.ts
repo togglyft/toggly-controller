@@ -89,5 +89,5 @@ exports.update = (feature) => {
 }
 
 function toFeatureEntity(result) {
-  return new Feature(result.id, result.name, result.enabled, result.lastModified, result.relatedTask);
+  return new Feature(result.id, result.name, result.enabled, result.relatedTask, result.lastModified);
 }
