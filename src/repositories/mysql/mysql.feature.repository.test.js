@@ -8,7 +8,6 @@ var pool = {
 
 beforeAll(() => {
   mysql.createPool = jest.fn().mockImplementation(() => pool)
-  tested.init({})
 });
 
 describe('mysql repository', () => {
@@ -20,7 +19,8 @@ describe('mysql repository', () => {
       port: 1234,
       user: "user",
       password: "password",
-      database: "database"
+      database: "database",
+      table: "feature"
     }
 
     let expectedConfig = {
@@ -32,11 +32,16 @@ describe('mysql repository', () => {
       database: configParams.database
     }
 
+    const configWrapper = require('../../configWrapper.ts')
+    configWrapper.init(configParams)
+
     //when
-    tested.init(configParams)
+    tested.init(configWrapper)
 
     //then
-    expect(mysql.createPool).toHaveBeenCalledWith(expectedConfig)
+    expect(mysql.createPool).toHaveBeenCalledWith(
+      expect.objectContaining(expectedConfig)
+    )
   });
 
   test('should initialize repository with default params', () => {
@@ -54,20 +59,24 @@ describe('mysql repository', () => {
       password: configParams.password,
       database: "toggly"
     }
+    const configWrapper = require('../../configWrapper.ts')
+    configWrapper.init(configParams)
 
     //when
-    tested.init(configParams)
+    tested.init(configWrapper)
 
     //then
-    expect(mysql.createPool).toHaveBeenCalledWith(expectedConfig)
+    expect(mysql.createPool).toHaveBeenCalledWith(
+      expect.objectContaining(expectedConfig)
+    )
   });
 
   test('should return all toggles', () => {
     //given
     const features = [
-      { id: 1, name: "Feature1", enabled: true },
-      { id: 2, name: "Feature2", enabled: false },
-      { id: 3, name: "Feature3", enabled: true }
+      { id: 1, name: "Feature1", enabled: true, lastModified: "2021-08-25 09:01:29.0", relatedTask: "FLX-123" },
+      { id: 2, name: "Feature2", enabled: false, lastModified: "2021-08-25 09:01:29.0", relatedTask: "FLX-123" },
+      { id: 3, name: "Feature3", enabled: true, lastModified: "2021-08-25 09:01:29.0", relatedTask: "FLX-123" }
     ]
     const query = jest.fn()
     query.mockImplementation((sql, cb) => cb(null, features, null))
@@ -86,7 +95,7 @@ describe('mysql repository', () => {
   test('should search toggles', () => {
     //given
     const features = [
-      { id: 1, name: "Feature1", enabled: true },
+      { id: 1, name: "Feature1", enabled: true, lastModified: "2021-08-25 09:01:29.0", relatedTask: "FLX-123" },
     ]
     const query = jest.fn()
     query.mockImplementation((sql, cb) => cb(null, features, null))
@@ -104,7 +113,7 @@ describe('mysql repository', () => {
 
   test('should create toggle', () => {
     //given
-    const feature = { id: 1, name: "Feature1", enabled: true }
+    const feature = { id: 1, name: "Feature1", enabled: true, lastModified: "2021-08-25 09:01:29.0", relatedTask: "FLX-123" }
     const query = jest.fn()
     query.mockImplementation((sql, values, cb) => cb(null, null, null))
 
@@ -138,7 +147,7 @@ describe('mysql repository', () => {
 
   test('should update toggle', () => {
     //given
-    const feature = { id: 1, name: "Feature1", enabled: true }
+    const feature = { id: 1, name: "Feature1", enabled: true, lastModified: "2021-08-25 09:01:29.0", relatedTask: "FLX-123" }
     const query = jest.fn()
     query.mockImplementation((sql, values, cb) => cb(null, null, null))
 
