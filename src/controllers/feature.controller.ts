@@ -33,7 +33,7 @@ exports.create = (req, res) => {
       res.status(400).send({ message: errors.FEATURE_INCOMPLETE });
       resolve();
     } else {
-      repository.create(new Feature(null, req.body.name, req.body.enabled, req.body.relatedTask, req.body.lastModified))
+      repository.create(new Feature(null, req.body.name, req.body.enabled, req.body.relatedTask, req.body.lastModified, req.body.company_id))
         .then(r => {
           res.sendStatus(201)
           resolve();
@@ -54,7 +54,7 @@ exports.update = (req, res) => {
       (!req.params || !req.params.id) && res.status(400).send({ message: errors.PROVIDE_EXISTING_FEATURE_ID });
       resolve()
     } else {
-      repository.update(new Feature(req.params.id, req.body.name, req.body.enabled, req.body.relatedTask, req.body.lastModified))
+      repository.update(new Feature(req.params.id, req.body.name, req.body.enabled, req.body.relatedTask, req.body.lastModified, req.body.company_id))
         .then(r => {
           res.sendStatus(200);
           resolve()
